@@ -49,8 +49,8 @@ function getClientIP(request: NextRequest): string {
     return cfConnectingIP;
   }
   
-  // Fallback (won't work in serverless, but good for local dev)
-  return request.ip || "unknown";
+  // Fallback if no IP headers are present (shouldn't happen in production with Vercel/Cloudflare)
+  return "unknown";
 }
 
 // Check rate limit
