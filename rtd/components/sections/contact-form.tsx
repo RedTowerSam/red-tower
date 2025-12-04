@@ -14,6 +14,8 @@ const contactFormSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email address"),
   message: z.string().min(1, "Message is required"),
+  // Honeypot field - should always be empty
+  website: z.string().max(0, "Spam detected").optional(),
 });
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
@@ -24,6 +26,9 @@ export function ContactForm() {
     type: "success" | "error" | null;
     message: string;
   }>({ type: null, message: "" });
+  
+  // Track when form was first rendered (for time-based spam detection)
+  const formLoadTime = React.useRef(Date.now());
 
   const {
     register,
@@ -39,12 +44,18 @@ export function ContactForm() {
     setSubmitStatus({ type: null, message: "" });
 
     try {
+      // Calculate time since form was loaded (prevents instant bot submissions)
+      const timeSinceLoad = Date.now() - formLoadTime.current;
+      
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          timeSinceLoad, // Include time for server-side validation
+        }),
       });
 
       const result = await response.json();
@@ -160,6 +171,18 @@ export function ContactForm() {
                       {errors.message.message}
                     </p>
                   )}
+                </div>
+
+                {/* Honeypot field - hidden from users, bots will fill it */}
+                <div className="hidden" aria-hidden="true">
+                  <label htmlFor="website">Website</label>
+                  <input
+                    type="text"
+                    id="website"
+                    {...register("website")}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
                 </div>
 
                 {/* Submit Status Messages */}
