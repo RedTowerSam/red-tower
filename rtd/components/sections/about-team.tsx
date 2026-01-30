@@ -58,7 +58,7 @@ export function AboutTeam() {
               
               {/* Description */}
               <p className="font-body font-light text-sm md:text-base leading-[1.5] text-fg">
-                Ben is the point person for all communications and sales. He has a wealth of talent identifying costs, timelines, assessing the needs of a project, and researching requirements. Ben keeps every project on time, under budget, and notifies clients along every step of the way.
+                Ben is the point person for all communications and sales. He has a wealth of talent identifying costs, timelines, assessing the needs of a project, and researching requirements. Ben keeps projects on time, under budget, and notifies clients along every step of the way.
               </p>
             </div>
           </div>
