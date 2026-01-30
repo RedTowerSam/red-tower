@@ -75,7 +75,7 @@ export function Footer() {
       {/* Copyright Section */}
       <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-5 pb-6 px-6">
         <p className="font-body font-light text-sm lg:text-[14px] leading-[1.5] text-fg whitespace-nowrap">
-          © 2025 Red Tower Digital
+          © {new Date().getFullYear()} Red Tower Digital
         </p>
         <p className="font-body font-light text-sm lg:text-[14px] leading-[1.5] text-accent whitespace-nowrap hidden md:block">|</p>
         <p className="font-body font-light text-sm lg:text-[14px] leading-[1.5] text-fg whitespace-nowrap">
